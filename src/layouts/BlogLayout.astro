@@ -1,10 +1,9 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
-interface Props {
-    title?: string;
-}
-const { title } = Astro.props;
+import '../styles/blog.css';
+const { title, ...rest } = Astro.props;
+const frontmatter = rest.frontmatter;
 ---
 
 <html lang="es">
@@ -12,10 +11,11 @@ const { title } = Astro.props;
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title> { title } </title>
-		<ClientRouter />
+		<title> { frontmatter.title } </title>
+        <ClientRouter />
 	</head>
 	<body class="bg-gray-900">
+        <a href="/">Regresar</a>
         <main class="mb-10 max-w-5xl mx-auto px-2 py-2">
             <slot />
         </main>
