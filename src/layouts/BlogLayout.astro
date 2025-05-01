@@ -2,8 +2,9 @@
 import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 import '../styles/blog.css';
-const { title, ...rest } = Astro.props;
-const frontmatter = rest.frontmatter;
+const { title } = Astro.props;
+// const { title, ...rest } = Astro.props;
+// const frontmatter = rest.frontmatter;
 ---
 
 <html lang="es">
@@ -11,7 +12,7 @@ const frontmatter = rest.frontmatter;
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title> { frontmatter.title } </title>
+		<title> { title } </title>
         <ClientRouter />
 	</head>
 	<body class="bg-gray-900">
