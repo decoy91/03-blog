@@ -14,9 +14,46 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 
-const { post } = Astro.props as { post: { data: { title: string } } };
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+
+const { post } = Astro.props as { post: CollectionEntry<'blog'> };
+
+const frontmatter = post.data;
+
+const { Content, headings } = await post.render()
 ---
 
-<BlogLayout title={ post.data.title }>
-    <h1>Hola mondo</h1>
+<BlogLayout title={ frontmatter.title }>
+    <h1 class="text-xs text-gray-500 mb-0">{ frontmatter.title }</h1>
+    <h4 class="text-md text-gray-400 mb-0">{ frontmatter.author }</h4>
+
+    <Image
+    src={ frontmatter.image }
+    alt={ frontmatter.title }
+    width={ 600 }
+    height={ 220 }
+    class="object-cover w-full h-[250px] my-5 rounded-md shadow-md mb-4"
+    transition:name={`${post.slug}-image`}
+    />
+
+    <h3>Tabla de Contenidos</h3>
+    <ol>
+        {
+            headings.map((headings, index) =>(
+                <li>
+                    <a href={ `#${ headings.slug }` }>
+                        { index + 1 } - { headings.text }
+                    </a>
+                </li>
+            ))
+        }
+    </ol>
+    <!-- Contenido -->
+    <Content />
+
+    <div class="my-20">
+        <a href="#btn-back">Subir...</a>
+    </div>
+
 </BlogLayout>
